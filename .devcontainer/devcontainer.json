@@ -1,0 +1,48 @@
+{
+    "name": "ARCTIC Development Container",
+    "privileged": true,
+    "remoteUser": "${localEnv:USER}",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "..",
+        "args": {
+            "USERNAME": "${localEnv:USER}"
+        }
+    },
+    "workspaceFolder": "/home/ws",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/ws,type=bind",
+    "customizations": {
+        "vscode": {
+            "extensions":[
+                "ms-python.python",
+                "twxs.cmake",
+                "donjayamanne.python-extension-pack",
+                "ms-azuretools.vscode-docker",
+                "yzhang.markdown-all-in-one"
+            ]
+        }
+    },
+    "containerEnv": {
+        "DISPLAY": "unix:0",
+        "NVIDIA_VISIBLE_DEVICES": "all",
+        "NVIDIA_DRIVER_CAPABILITIES": "all"
+    },
+    "runArgs": [
+        "--net=host",
+        "--pid=host",
+        "--ipc=host",
+        "--gpus=all",
+        "--name=arctic-container-${localEnv:USER}",
+        "-e", "DISPLAY=${env:DISPLAY}"
+    ],
+    "mounts": [
+       "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+       "source=/dev/dri,target=/dev/dri,type=bind,consistency=cached",
+       "source=/var/run/dbus,target=/var/run/dbus,type=bind",
+       "source=/home/${localEnv:USER}/.ssh,target=/home/${localEnv:USER}/.ssh,type=bind",
+       "source=/home/${localEnv:USER}/.Xauthority,target=/home/${localEnv:USER}/.Xauthority,type=bind,consistency=cached",
+       "source=/usr/src,target=/usr/src,type=bind,consistency=cached",
+       "source=/lib/modules,target=/lib/modules,type=bind,consistency=cached"
+    ],
+    "postCreateCommand": "sudo chown -R $(whoami) /home/ws/"
+}
