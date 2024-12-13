@@ -94,6 +94,11 @@ RUN pip install moderngl-window==2.4.6
 # Uncomment the following line in the body_models.py file
 RUN sed -i 's/# joints = self.vertex_joint_selector(vertices, joints)/joints = self.vertex_joint_selector(vertices, joints)/g' /opt/conda/envs/arctic_env/lib/python3.10/site-packages/smplx/body_models.py
 
+# write to bashrc
+RUN echo "export CUDA_HOME=/usr/local/cuda-11.6" >> /home/${USERNAME}/.bashrc
+RUN echo "export PATH=\"/usr/local/cuda-11.6/bin:$PATH\"" >> /home/${USERNAME}/.bashrc
+RUN echo "export CPATH=\"/usr/local/cuda-11.6/include:$CPATH\"" >> /home/${USERNAME}/.bashrc
+RUN echo "export LD_LIBRARY_PATH=\"$LD_LIBRARY_PATH:/usr/local/cuda-11.6/lib64/\"" >> /home/${USERNAME}/.bashrc
 
 # Set working directory
 WORKDIR /home/ws

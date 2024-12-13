@@ -44,5 +44,5 @@
        "source=/usr/src,target=/usr/src,type=bind,consistency=cached",
        "source=/lib/modules,target=/lib/modules,type=bind,consistency=cached"
     ],
-    "postCreateCommand": "sudo chown -R $(whoami) /home/ws/"
+    "postCreateCommand": "sudo chown -R $(whoami) /home/ws/ && chmod +x ./bash/*.sh "
 }
