@@ -89,6 +89,7 @@ RUN conda install -y pytorch3d -c pytorch3d
 
 RUN pip uninstall -y numpy
 RUN pip install numpy==1.22.4
+RUN pip install moderngl-window==2.4.6
 
 # Uncomment the following line in the body_models.py file
 RUN sed -i 's/# joints = self.vertex_joint_selector(vertices, joints)/joints = self.vertex_joint_selector(vertices, joints)/g' /opt/conda/envs/arctic_env/lib/python3.10/site-packages/smplx/body_models.py
